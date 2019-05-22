@@ -253,9 +253,9 @@ mp_file_header({file, Path, {Disposition, Params}, ExtraHeaders}, Boundary) ->
     CType = mimerl:filename(Path),
     Len = filelib:file_size(Path),
     ExtraHeaders0 = lists:map(fun ({K, V}) -> {hackney_bstr:to_lower(K), V} end, ExtraHeaders),
-    Headers = mp_filter_header([{<<"content-type">>, CType},
-                                {<<"content-length">>, Len}],
-                               [{<<"content-disposition">>, Disposition, Params} | ExtraHeaders0]),
+    Headers = mp_filter_header([{<<"Content-Type">>, CType},
+                                {<<"Content-Length">>, Len}],
+                               [{<<"Content-Disposition">>, Disposition, Params} | ExtraHeaders0]),
     BinHeader = mp_header(Headers, Boundary),
     {BinHeader, Len}.
 
@@ -277,9 +277,9 @@ mp_data_header({Name, Len, ExtraHeaders}, Boundary) ->
 mp_data_header({Name, Len, {Disposition, Params}, ExtraHeaders}, Boundary) ->
     CType = mimerl:filename(Name),
     ExtraHeaders0 = lists:map(fun ({K, V}) -> {hackney_bstr:to_lower(K), V} end, ExtraHeaders),
-    Headers = mp_filter_header([{<<"content-type">>, CType},
-                                {<<"content-length">>, Len}],
-                               [{<<"content-disposition">>, Disposition, Params} | ExtraHeaders0]),
+    Headers = mp_filter_header([{<<"Content-Type">>, CType},
+                                {<<"Content-Length">>, Len}],
+                               [{<<"Content-Disposition">>, Disposition, Params} | ExtraHeaders0]),
     BinHeader = mp_header(Headers, Boundary),
     {BinHeader, Len}.
 
